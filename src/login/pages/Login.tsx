@@ -1,6 +1,5 @@
 import type { JSX } from "keycloakify/tools/JSX";
 import { useState } from "react";
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import { useIsPasswordRevealed } from "keycloakify/tools/useIsPasswordRevealed";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
@@ -27,10 +26,18 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             i18n={i18n}
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
-            displayMessage={!messagesPerField.existsError("username", "password")}
+            displayMessage={!messagesPerField.existsError("username", "password", "email")}
             headerNode={msg("loginAccountTitle")}
             displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
         >
+            {messagesPerField.existsError("username", "email") && messagesPerField.existsError("password") && (
+                <div className="alert-error kcAlertClass pf-c-alert pf-m-inline pf-m-danger">
+                    <div className="pf-c-alert__icon">
+                        <span className="kcFeedbackErrorIcon fa fa-fw fa-exclamation-circle"></span>
+                    </div>
+                    <span className="kcAlertTitleClass pf-c-alert__title kc-feedback-text">{msgStr("invalidUserMessage")}</span>
+                </div>
+            )}
             <div id="kc-form">
                 <div id="kc-form-wrapper">
                     {realm.password && (
@@ -62,15 +69,10 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         autoFocus
                                         autoComplete="username"
                                     />
-                                    {messagesPerField.existsError("username", "password") && (
-                                        <span
-                                            id="input-error"
-                                            className={kcClsx("kcInputErrorMessageClass")}
-                                            aria-live="polite"
-                                            dangerouslySetInnerHTML={{
-                                                __html: kcSanitize("Nepravilan korisnički nalog ili lozinka")
-                                            }}
-                                        />
+                                    {messagesPerField.existsError("username", "email") && !messagesPerField.existsError("password") && (
+                                        <span id="input-error" className={kcClsx("kcInputErrorMessageClass")} aria-live="polite">
+                                            {msgStr("invalidUsernameMessage")}
+                                        </span>
                                     )}
                                 </div>
                             )}
@@ -88,15 +90,10 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         autoComplete="current-password"
                                     />
                                 </PasswordWrapper>
-                                {usernameHidden && messagesPerField.existsError("username", "password") && (
-                                    <span
-                                        id="input-error"
-                                        className={kcClsx("kcInputErrorMessageClass")}
-                                        aria-live="polite"
-                                        dangerouslySetInnerHTML={{
-                                            __html: kcSanitize("Nepravilan korisnički nalog ili lozinka")
-                                        }}
-                                    />
+                                {usernameHidden && !messagesPerField.existsError("username", "email") && messagesPerField.existsError("password") && (
+                                    <span id="input-error" className={kcClsx("kcInputErrorMessageClass")} aria-live="polite">
+                                        {msgStr("invalidPasswordMessage")}
+                                    </span>
                                 )}
                             </div>
                             <div className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}></div>

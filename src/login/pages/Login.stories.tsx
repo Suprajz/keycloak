@@ -16,7 +16,7 @@ export const Default: Story = {
     render: () => <KcPageStory />
 };
 
-export const InSerbian: Story = {
+export const InSerbianLat: Story = {
     render: () => (
         <KcPageStory
             kcContext={{
@@ -40,10 +40,41 @@ export const InSerbianCyrillic: Story = {
     )
 };
 
-export const WithInvalidCredential: Story = {
+export const WithInvalidCredentialInSerbianLat: Story = {
     render: () => (
         <KcPageStory
             kcContext={{
+                locale: {
+                    currentLanguageTag: "sr-Latn-RS"
+                },
+                login: {
+                    username: "johndoe"
+                },
+                messagesPerField: {
+                    // NOTE: The other functions of messagesPerField are derived from get() and
+                    // existsError() so they are the only ones that need to mock.
+                    existsError: (fieldName: string, ...otherFieldNames: string[]) => {
+                        const fieldNames = [fieldName, ...otherFieldNames];
+                        return fieldNames.includes("username") || fieldNames.includes("password");
+                    },
+                    get: (fieldName: string) => {
+                        if (fieldName === "username" || fieldName === "password") {
+                            return "Invalid username or password.";
+                        }
+                        return "";
+                    }
+                }
+            }}
+        />
+    )
+};
+export const WithInvalidCredentialInSerbianCyrillic: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                locale: {
+                    currentLanguageTag: "sr-Cyrl-RS"
+                },
                 login: {
                     username: "johndoe"
                 },

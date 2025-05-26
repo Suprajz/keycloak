@@ -31,7 +31,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     const { auth, url, message, isAppInitiatedAction, locale } = kcContext;
 
-    const logo = locale?.currentLanguageTag.includes("sr-Cyrl-RS") ? logoCyrl : logoLatn;
+    const logo = locale?.currentLanguageTag === "sr-Cyrl-RS" ? logoCyrl : logoLatn;
 
     useEffect(() => {
         document.title = documentTitle ?? msgStr("loginTitle", kcContext.realm.displayName);
