@@ -11,7 +11,7 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             getMessages: () => import("./i18n.sr")
         },
         "sr-Cyrl-RS": {
-            label: "Srpski (ћирилица)",
+            label: "Српски (ћирилица)",
             getMessages: () => import("./i18n.sr-Cyrl")
         }
     })
