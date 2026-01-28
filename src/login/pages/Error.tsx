@@ -11,7 +11,7 @@ export default function ErrorPage(props: PageProps<Extract<KcContext, { pageId: 
         classes
     });
 
-    const { msg, msgStr } = i18n;
+    const { msgStr } = i18n;
 
     // This is your custom translated text:
     // errorTitleHtml OR errorTitle from your i18n dictionary

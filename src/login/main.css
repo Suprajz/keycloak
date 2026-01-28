@@ -19,6 +19,10 @@
     padding: 0 0 20px !important;
     width: 100% !important;
     height: 148px !important;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 .login-pf-page .card-pf {
@@ -87,7 +91,13 @@
     border: none !important;
 }
 
-.logo-big-lat {
-    width: 100% !important;
-    height: 100% !important;
+.logo-big {
+    height: 128px;
+    width: auto !important;
+    max-width: 100%;
+    object-fit: contain;
+
+    border-radius: 10px;
+    border: 5px solid rgb(20, 34, 51);
+    display: block;
 }
