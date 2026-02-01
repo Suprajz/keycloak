@@ -11,14 +11,13 @@ export default function ErrorPage(props: PageProps<Extract<KcContext, { pageId: 
         classes
     });
 
-    const { msgStr } = i18n;
+    console.log(kcContext.locale?.currentLanguageTag);
 
-    // This is your custom translated text:
-    // errorTitleHtml OR errorTitle from your i18n dictionary
-    const title = msgStr("errorTitleHtml") || msgStr("errorTitle");
+    const { msg } = i18n;
 
-    // don't display backend error text
-    const showServerMessage = false;
+    const showServerMessage = false; // don't display backend error text
+    const title = msg("errorTitle");
+    const backToLoginHref = kcContext.client?.baseUrl ?? "#";
 
     return (
         <Template
@@ -32,13 +31,17 @@ export default function ErrorPage(props: PageProps<Extract<KcContext, { pageId: 
         >
             <div id="kc-error-message" style={{ marginTop: "2rem" }}>
                 {/* HIDE backend error message completely */}
-                {showServerMessage && <p className={kcClsx("kcContentWrapperClass")}>{kcContext.message.summary}</p>}
+                {/* {showServerMessage && <p className={kcClsx("kcContentWrapperClass")}>{kcContext.message.summary}</p>} */}
 
                 {/* NO alert, no styling — so it looks exactly like your screenshot */}
                 {!showServerMessage && (
-                    <p className={kcClsx("kcContentWrapperClass")} style={{ color: "transparent", height: 0, margin: 0, padding: 0 }}>
-                        {/* nothing shown */}
-                    </p>
+                    <div className={kcClsx("kcContentWrapperClass")}>
+                        <p>{msg("internalServerError")}</p>
+
+                        <div style={{ marginTop: "1rem" }}>
+                            <a href={backToLoginHref}>{msg("backToLogin")}</a>
+                        </div>
+                    </div>
                 )}
             </div>
         </Template>

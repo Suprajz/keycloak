@@ -25,10 +25,10 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         children
     } = props;
 
+    console.log("Language:" + kcContext.locale?.currentLanguageTag);
+
     const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
-
     const { msg, msgStr } = i18n;
-
     const { auth, url, message, isAppInitiatedAction, locale } = kcContext;
 
     const logo = locale?.currentLanguageTag === "sr-Cyrl-RS" ? logoCyrl : logoLatn;

@@ -18,6 +18,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
     const { i18n } = useI18n({ kcContext });
 
     const Login = lazy(() => import("./pages/Login"));
+    const ErrorPage = lazy(() => import("./pages/Error"));
 
     return (
         <Suspense>
@@ -35,6 +36,18 @@ export default function KcPage(props: { kcContext: KcContext }) {
                                 // doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                             />
                         );
+
+                    case "error.ftl":
+                        return (
+                            <ErrorPage
+                                kcContext={kcContext}
+                                i18n={i18n}
+                                classes={classes}
+                                Template={Template}
+                                doUseDefaultCss={true}
+                            />
+                        );
+
                     default:
                         return (
                             <DefaultPage
